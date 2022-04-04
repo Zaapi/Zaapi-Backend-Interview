@@ -15,8 +15,11 @@ During your interview you will need to answer questions about how you found the 
 
 #### Instructions
 1. Clone this repository. (**do not fork it**)
-2. With your own GitHub account, create a public repository containing the code you cloned in step 1 and name it \<firstname-lastname-movies\>.
+2. With your own GitHub account, create a public repository containing the code you cloned in step 1 and name it \<firstname-lastname-sn100\>.
 3. Notify the interviewer by sending them a link to your repository.
 4. Start your debugging session and fix everything you are able to find.
 5. Commit the changes to **your** repository.
 6. Prepare for the interview and have your camera on ;).
+
+#### Note
+- Do not try to clean the code, thats not the issue.
