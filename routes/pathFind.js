@@ -93,7 +93,14 @@ let findShortestPath = (graph, startNode, endNode) => {
   // return the shortest path & the end node's distance from the start node
   return results;
 };
-router.get("/", (req, res) => {
+
+/*
+Now knowing where to land, DL32 needs to figure out the shortest path towards the landing zone. 
+DL32 is guided by satellite S1, telling the different routes it can take to the landing zone and the distance between each. 
+
+It should return the shortest path between the starting and ending coordinates.
+*/
+router.post("/", (req, res) => {
   const { start, end } = req.body;
   const shortestPath = findShortestPath(graph, start, end);
   res.status(200).send(`shortest path is ${JSON.stringify(shortestPath)}`);
