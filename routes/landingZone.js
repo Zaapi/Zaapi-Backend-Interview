@@ -17,6 +17,17 @@ const isSubsetCheck = (arr1, arr2) => {
   return false;
 };
 
+router.get("/", (req, res) => {
+  const response = "DL32 needs to fly to 10 landing zones, but not sure which one has the correct cordinates <br/>, as the 2 NASA rovers which mapped the locations, 1 of them shared garbage cordinates and another malfunctioned in the middle.<br/> So now after talking to NASA they found out if the cordinates shared by second rover R2 and Rover R1 match, that landing zone is good to go."+
+  "So for this we have an API where we pass Z1, Z2, Z3... Z10 as Zone names. <br/>"+
+  "it returns Valid Zone, and Invalid Zone. <br/>"+
+  "api Name : landingZone/{zoneName} <br/>"+
+  "ex. if user pass Z1 as zone name, we would have 2 arrays R1 and R2, the API only checks if R2 contains all the cordinates of R1 <br/>"+
+  "it returns true and false and also time taken to run the function. <br/>";
+  
+  res.send(response)
+})
+
 router.get("/:zone", (req, res) => {
   const isValid = [
     "Z1",
