@@ -1,79 +1,23 @@
 const express = require("express");
-var seedrandom = require("seedrandom");
 
 const router = express.Router();
 
-const fillArray = (length, type) => {
-  let finalArray = [];
-  for (let i = 0; i <= length; i++) {
-    finalArray[i] =
-      type === "seed"
-        ? Math.floor(seedrandom(i)() * 1000)
-        : Math.floor(Math.random() * (1000000 - 100) + 100);
-  }
-  return finalArray;
-};
-
-const zoneCollection = {
-  Z1: {
-    R1: fillArray(100000, "seed"),
-    R2: fillArray(80000),
-  },
-  Z2: {
-    R1: fillArray(100000, "seed"),
-    R2: fillArray(70000),
-  },
-  Z3: {
-    R1: fillArray(100000, "seed"),
-    R2: fillArray(90000),
-  },
-  Z4: {
-    R1: fillArray(1000000, "seed"),
-    R2: fillArray(80000, "seed"),
-  },
-  Z5: {
-    R1: fillArray(100000, "seed"),
-    R2: fillArray(50000),
-  },
-  Z6: {
-    R1: fillArray(100000, "seed"),
-    R2: fillArray(80000),
-  },
-  Z7: {
-    R1: fillArray(1000000, "seed"),
-    R2: fillArray(50000, "seed"),
-  },
-  Z8: {
-    R1: fillArray(100000, "seed"),
-    R2: fillArray(70000),
-  },
-  Z9: {
-    R1: fillArray(1000000, "seed"),
-    R2: fillArray(70000, "seed"),
-  },
-  Z10: {
-    R1: fillArray(100000, "seed"),
-    R2: fillArray(60000),
-  },
-};
-
-const isSubSet = (arr1, arr2) => {
-    let time = new Date().getTime()
+const isSubsetCheck = (arr1, arr2) => {
+  let valid = [];
   for (let i = 0; i < arr2.length; i++) {
     for (let j = 0; j < arr1.length; j++) {
       if (arr2[i] === arr1[j]) {
-        break;
+          valid.push(true);
       }
-      if (j == arr1.length - 1) return false;
     }
-    let newTime = new Date().getTime()
-    console.log(newTime - time)
+  }
+  if(valid.length === arr2.length){
     return true;
   }
+  return false;
 };
 
 router.get("/:zone", (req, res) => {
-  const start = performance.now();
   const isValid = [
     "Z1",
     "Z2",
@@ -87,15 +31,19 @@ router.get("/:zone", (req, res) => {
     "Z10",
   ].includes(req.params.zone);
   if (isValid) {
-    const selectedZone = zoneCollection[req.params.zone];
+    let zone = require('../assets/' + req.params.zone + '.json');
+    const selectedZone = zone.data;
+    const response = []
 
-    if (isSubSet(selectedZone.R1, selectedZone.R2)) {
+    let start = performance.now();
+    if (isSubsetCheck(selectedZone.R1, selectedZone.R2)) {
       const end = performance.now();
-      res.status(200).send(`true ${end - start}`);
+      response.push(`SubSet 2 : true ${end - start}`);
     } else {
       const end = performance.now();
-      res.status(200).send(`false ${end - start}`);
+      response.push(`SubSet 2 : false ${end - start}`);
     }
+    res.status(200).send(`${response}`);
   } else {
     res.status(400).send({ error: "selected zone is not on the list" });
   }
